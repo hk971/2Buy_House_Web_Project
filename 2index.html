@@ -21,14 +21,24 @@
     </form>
 
     <script>
-        const scriptURL = 'YOUR_GOOGLE_SCRIPT_URL_HERE';
-        const form = document.getElementById('https://script.google.com/macros/s/AKfycbwIPq1RHE9P28HKMecmbeTVT55PI5pbRTv2EQcSzQ1QfLSmo6SIcCQFlEvlpTWiL3N5nw/exec');
+        // 确保DOM加载完成后执行代码
+        document.addEventListener('DOMContentLoaded', function() {
+            // Google Apps Script 部署的URL
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyVFFm3S40GRdxd83Xa9v4MHl7Y_vATFogMf39aPFt5RUYcPsFr9QJrWDFHyhNim2DlLw/exec';
+            const form = document.getElementById('submitForm');
 
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(response => alert('Success!', response))
-                .catch(error => alert('Error!', error.message))
+            // 为表单添加提交事件监听
+            form.addEventListener('submit', function(e) {
+                e.preventDefault(); // 阻止表单默认提交行为
+
+                // 将表单数据转换为FormData对象
+                const formData = new FormData(form);
+
+                // 使用fetch向Google Apps Script发送POST请求
+                fetch(scriptURL, { method: 'POST', body: formData })
+                    .then(response => alert('Success!'))
+                    .catch(error => alert('Error!'));
+            });
         });
     </script>
 </body>
